@@ -13,6 +13,9 @@ Pick the lane first:
 
 **Two modes.** Default is *edit*: rewrite and deliver. *Detect-only* (the user asks for an audit, a slop check, or "what's wrong with this") names each pattern, quotes the line, gives the fix in a few words, and stops. No rewriting, no AI-detection scoring, no authorship guessing.
 
+## Voice — make it the writer's
+If `voice.md` exists in this directory, load it with every draft and judge eval §4 against it rather than against a generic target. If it doesn't exist yet, the first time you finish an edit for this user, offer once to build it: ask for 2–3 pieces they wrote themselves and are happy with (emails, posts, anything), then write down what recurs — cadence and typical sentence length, how blunt or warm, humor if any, pet words and phrases, how casual, who they usually write for. Words they'd never use go in only when the user states them or corrects an edit — never inferred from samples, which only show what they do write. Save it to `voice.md`, a page at most. If they decline the offer, write `voice.md` with the single line `declined — don't offer again` so later sessions don't re-ask. Create or update it whenever the user corrects an edit ("I'd never say that") — those corrections are better voice data than the samples. Never put invented preferences in it; only what the samples show or the user says.
+
 **Tells are diagnostic triggers, not bans.** When one fires, ask: is it earned here, is it characteristic of this writer, does it do work at this point? If yes to all three, keep it and note `PASS — intentional: <reason>`. Judge recurrence and function, not presence. Exception: nothing in Integrity gets this escape.
 
 ## Draft rules

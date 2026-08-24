@@ -28,6 +28,12 @@ Use the humanize-copy skill on this draft.
 
 Two modes. The default is *edit*: it rewrites, then reports what changed and why. Ask for "a slop check" or "an audit" instead and it switches to *detect-only*. For each problem it names the pattern, quotes the offending line, and gives the fix in a few words, then stops and waits. It never scores a draft for "how AI it sounds" and never guesses who wrote something.
 
+## Make it yours
+
+The tell-stripping works with no setup. Knowing your voice is the part a fresh clone can't do, so the skill builds that knowledge itself: after its first edit it offers to make a voice profile. Paste two or three things you wrote yourself and liked, and it records what recurs — cadence, bluntness, pet words, words you'd never use — in a `voice.md` beside the skill. Every edit after that is judged against your voice instead of a generic target.
+
+When it gets you wrong, tell it ("I'd never say that") and it updates the file. Corrections are better voice data than samples. You can also write `voice.md` by hand and skip the interview.
+
 ## What's inside
 
 `SKILL.md` carries the rules. A sentence-level pass catches the recognizable machine patterns: em-dash pileups, "not just X, it's Y", staccato triples, a ban-list of words like *delve* and *seamless*, weasel attribution. A structure pass for long-form catches the subtler tells: symmetric essay skeletons, every anecdote getting its own interpretation paragraph, fake-profound kickers. An integrity section bars invented quotes, numbers, credentials, and experiences outright; gaps get a `[TK]` marker and a question instead of a plausible guess.

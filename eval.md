@@ -49,6 +49,7 @@ Scoring a draft for "how AI does this sound" is not a verdict. Don't do it, and 
 ## 4. Voice and proportion
 
 - [ ] Writer would recognize this as theirs: vocabulary, cadence, bluntness, humor, uncertainty, digressions, polish level intact
+- [ ] If `voice.md` exists, the draft was checked against it — pet words preserved where they occurred (never inserted to satisfy this line), never-words absent, register matches
 - [ ] Strong human sentences left alone rather than flattened for consistency
 - [ ] Cutting proportional to actual slop — no aggressive compression that stripped character
 - [ ] Useful edge preserved; no opinion sanded into balance
