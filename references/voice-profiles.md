@@ -38,6 +38,19 @@ Record patterns supported by multiple samples:
 
 Do not infer personality, protected characteristics, health, politics, relationships, or other sensitive traits. Do not convert absence into a prohibition.
 
+For Gmail Takeout and Purview Teams exports, prefer the dependency-free local processor:
+
+```bash
+python3 scripts/build_voice_profile.py \
+  --gmail-zip /private/path/takeout.zip \
+  --teams-zip /private/path/teams-items.zip \
+  --owner "Writer Name" \
+  --owner-email writer@example.invalid \
+  --output-dir /private/path/voice-profile-draft
+```
+
+The processor reads archives locally, selects authored content, removes common quoted/forwarded material and signatures, redacts obvious identifiers, creates a deterministic train/validation split, and writes a draft profile plus aggregate metrics. Its output remains sensitive derived data: keep the output directory outside the skill repository and review redaction quality before any model training or upload.
+
 ## Profile format
 
 ```markdown

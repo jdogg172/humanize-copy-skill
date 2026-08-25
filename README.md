@@ -61,6 +61,7 @@ references/                 Guidance loaded only when relevant
 evals/evals.json            Behavioral evaluation cases
 evals/files/                Synthetic, non-private evaluation fixtures
 scripts/validate_skill.py   Dependency-free structural validation
+scripts/build_voice_profile.py  Local Gmail/Purview corpus processor
 tests/                      Validator regression tests
 ```
 

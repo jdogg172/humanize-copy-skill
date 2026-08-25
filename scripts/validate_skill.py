@@ -23,6 +23,7 @@ REQUIRED_FILES = (
     "references/voice-profiles.md",
 )
 PRIVATE_EXTENSIONS = {".mbox", ".pst", ".ost"}
+PRIVATE_NAMES = {"corpus.jsonl", "metrics.json", "voice-profile-draft.md"}
 
 
 def parse_frontmatter(path: Path) -> tuple[dict[str, str], list[str]]:
@@ -129,6 +130,8 @@ def validate(root: Path = ROOT) -> list[str]:
             errors.append(f"private mail archive must not be committed: {path.relative_to(root)}")
         if path.is_file() and "profiles/private" in path.as_posix():
             errors.append(f"private profile must not be committed: {path.relative_to(root)}")
+        if path.is_file() and path.name.lower() in PRIVATE_NAMES and "evals/files" not in path.as_posix():
+            errors.append(f"derived private voice data must not be committed: {path.relative_to(root)}")
     return errors
 
 
