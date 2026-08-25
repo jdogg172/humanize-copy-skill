@@ -1,0 +1,14 @@
+# Personal voice profiles and raw style corpora never belong in this repository.
+/voice.md
+/voice-*.md
+profiles/private/
+corpus/
+*.mbox
+*.pst
+*.ost
+
+# Local validation artifacts
+__pycache__/
+*.pyc
+.coverage
+.pytest_cache/

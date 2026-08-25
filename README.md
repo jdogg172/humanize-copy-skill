@@ -1,50 +1,88 @@
 # humanize-copy
 
-An Agent Skill that edits prose so a reader can't clock it as AI, without sanding off the writer's own voice while it's at it.
+An Agent Skill for revising English business and editorial prose without inventing facts, flattening the writer's voice, or pretending to detect authorship.
 
-Works in Claude Code, Claude Desktop, and anything else that reads Agent Skills. Two files, no dependencies.
+The skill has three explicit workflows:
+
+- **Edit** rewrites a draft at the smallest useful depth.
+- **Detect-only** identifies recurring machine-like patterns without rewriting.
+- **Voice-profile setup** derives a reviewable profile from writing samples only when the user requests it.
+
+## Why this skill is different
+
+Most humanizers optimize a ban list. This one gives source fidelity and the writer's actual voice higher priority than stylistic cleanup. It treats common patterns as diagnostic triggers rather than universal prohibitions and requires missing facts to remain visible instead of being plausibly invented.
+
+It does not assign an “AI score,” guess who wrote a passage, or promise to defeat detection tools.
 
 ## Install
+
+Claude Code on Linux or macOS:
 
 ```bash
 git clone https://github.com/millwright-labs/humanize-copy-skill ~/.claude/skills/humanize-copy
 ```
 
-Windows (PowerShell):
+Claude Code on Windows:
 
 ```powershell
 git clone https://github.com/millwright-labs/humanize-copy-skill "$env:USERPROFILE\.claude\skills\humanize-copy"
 ```
 
-Or hand the repo URL to your agent and ask it to install the skill. Restart your session and it's live.
+Other Agent Skills-compatible hosts may use a different skill directory. Install the repository as a folder named `humanize-copy` and confirm that the host discovers `SKILL.md`.
 
 ## Use
 
-It loads on its own whenever the agent writes or edits human-facing prose — website copy, emails, essays, newsletters, proposals, social posts. You can also invoke it directly:
-
-```
-Use the humanize-copy skill on this draft.
+```text
+Use the humanize-copy skill to edit this draft.
 ```
 
-Two modes. The default is *edit*: it rewrites, then reports what changed and why. Ask for "a slop check" or "an audit" instead and it switches to *detect-only*. For each problem it names the pattern, quotes the offending line, and gives the fix in a few words, then stops and waits. It never scores a draft for "how AI it sounds" and never guesses who wrote something.
+```text
+Use the humanize-copy skill in detect-only mode. Do not rewrite it.
+```
 
-## Make it yours
+```text
+Use the humanize-copy skill to build a private voice profile from these samples.
+```
 
-The tell-stripping works with no setup. Knowing your voice is the part a fresh clone can't do, so the skill builds that knowledge itself: after its first edit it offers to make a voice profile. Paste two or three things you wrote yourself and liked, and it records what recurs — cadence, bluntness, pet words, words you'd never use — in a `voice.md` beside the skill. Every edit after that is judged against your voice instead of a generic target.
+The description is intentionally narrow. Installing the skill should not silently apply a house style to every email, proposal, technical document, or compliance artifact.
 
-When it gets you wrong, tell it ("I'd never say that") and it updates the file. Corrections are better voice data than samples. You can also write `voice.md` by hand and skip the interview.
+## Privacy and voice profiles
 
-## What's inside
+Raw emails, chat exports, and writing samples should remain outside this repository. Profile creation is opt-in and produces a short, inspectable summary rather than a copy of the source corpus.
 
-`SKILL.md` carries the rules. A sentence-level pass catches the recognizable machine patterns: em-dash pileups, "not just X, it's Y", staccato triples, a ban-list of words like *delve* and *seamless*, weasel attribution. A structure pass for long-form catches the subtler tells: symmetric essay skeletons, every anecdote getting its own interpretation paragraph, fake-profound kickers. An integrity section bars invented quotes, numbers, credentials, and experiences outright; gaps get a `[TK]` marker and a question instead of a plausible guess.
+Store profiles in a private user-controlled location, use separate profiles for different people or brands, and review the generated profile before relying on it. See [references/voice-profiles.md](references/voice-profiles.md).
 
-The check that matters most runs last. Stripping the obvious tells produces clean prose anyone could have written — which has become its own recognizable style. So every paragraph has to answer for what it contains that the writer specifically knows, noticed, or is willing to risk saying. A paragraph that could ship unchanged under a stranger's name gets revised or cut.
+## Repository layout
 
-`eval.md` is a pass/fail checklist the agent runs on its own output. It loops until every applicable line passes, and an overcorrection guard keeps the fix from becoming the disease: no forced slang, no fragments-everywhere, no fake-casual.
+```text
+SKILL.md                    Runtime entrypoint and routing
+eval.md                     Runtime self-review checklist
+references/                 Guidance loaded only when relevant
+evals/evals.json            Behavioral evaluation cases
+evals/files/                Synthetic, non-private evaluation fixtures
+scripts/validate_skill.py   Dependency-free structural validation
+tests/                      Validator regression tests
+```
+
+`eval.md` checks one generated draft. `evals/evals.json` tests whether the skill improves behavior across realistic cases. They are deliberately separate.
+
+## Validate
+
+Requires Python 3.10 or newer and no third-party packages.
+
+```bash
+python3 scripts/validate_skill.py
+python3 -m unittest discover -s tests -v
+```
+
+For behavioral evaluation, run every prompt in `evals/evals.json` both with this skill and against a no-skill baseline. Review factual preservation and instruction-boundary expectations before subjective style preferences. Re-run cases across multiple model executions because prose evaluation is variable.
 
 ## Known limits
 
-The rules are calibrated for English business copy and editorial long-form. Code comments and internal technical docs are out of scope, and the skill says so rather than editing them anyway. The tell catalog reflects the models of 2025–2026; as house styles shift, expect the ban-list to need pruning.
+- Calibrated for English business copy and editorial long-form.
+- A self-review checklist cannot prove that prose is human-authored or universally natural.
+- Voice matching depends on representative, lawfully available samples and human review.
+- Required legal, compliance, technical, accessibility, and brand conventions override style heuristics.
 
 ## License
 
