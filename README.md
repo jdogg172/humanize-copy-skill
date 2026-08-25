@@ -19,13 +19,13 @@ It does not assign an “AI score,” guess who wrote a passage, or promise to d
 Claude Code on Linux or macOS:
 
 ```bash
-git clone https://github.com/millwright-labs/humanize-copy-skill ~/.claude/skills/humanize-copy
+git clone https://github.com/jdogg172/humanize-copy-skill ~/.claude/skills/humanize-copy
 ```
 
 Claude Code on Windows:
 
 ```powershell
-git clone https://github.com/millwright-labs/humanize-copy-skill "$env:USERPROFILE\.claude\skills\humanize-copy"
+git clone https://github.com/jdogg172/humanize-copy-skill "$env:USERPROFILE\.claude\skills\humanize-copy"
 ```
 
 Other Agent Skills-compatible hosts may use a different skill directory. Install the repository as a folder named `humanize-copy` and confirm that the host discovers `SKILL.md`.
